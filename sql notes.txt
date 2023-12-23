@@ -12,11 +12,23 @@ Data types:-
 8)lob :- 4GB
 
 -------------------------------------------------
+create table cognizantstud(empno number,name varchar2(20),address varchar2(20))
+
+insert into cognizantstud values(102,'anjali','bangalore');
+
+select * from cognizantstud;
+
+alter table cognizantstud add salary number;
+
+update cognizantstud set salary=55000 where empno=102;
+
+select empno,name,salary+1000 as salaryBonus from cognizantstud
+----------------------------------------------------------------------------------------------------------------
 1)Arithmatic operator:-  
 + , -,*,/
 
 
-select empno,name,salary+1000 as salaryBonus from mphasis183;//temporary 
+select empno,name,salary+1000 as salaryBonus from cognizantstud;//temporary 
 
 select empno,name,salary-1000 as salaryReduction from mphasis183;
 
