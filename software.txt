@@ -1,0 +1,7 @@
+oracle
+--------------
+https://drive.google.com/file/d/0B_8PmSMM3tRdMl9PS1hUMFFEbkk/view?usp=sharing&resourcekey=0-qjqe8sjixyAi8meOXxO_jQ
+
+eclipse
+---------------
+https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2023-12/R/eclipse-inst-jre-win64.exe
