@@ -1,0 +1,909 @@
+             Sql :- structure query language
+----------------------------------------------
+Data types:-
+----------------------
+1)number :- size 38 digits ->number,number(5),number(6,2)--->floating values(9999.99)
+2)character :- size 2000 bytes -->char(20)
+3)varchar2:- size 4000 bytes -->varchar2(15)
+4)date :- 7 bytes -->'2-jan-2021'
+5)long :- 2 GB
+6)raw :- store binary data ,size is 2000 bytes
+7)long raw :- 2GB
+8)lob :- 4GB
+
+-------------------------------------------------
+1)Arithmatic operator:-  
++ , -,*,/
+
+
+select empno,name,salary+1000 as salaryBonus from mphasis183;//temporary 
+
+select empno,name,salary-1000 as salaryReduction from mphasis183;
+
+select empno,name,salary/30 as perDaySalary from mphasis183;
+
+select empno,name,salary*12 as AnualSalary from mphasis183;
+-----------------------------------------------
+2)comparison operator :- =,>=,<= ,>,<,!=(not equal to)
+select * from mphasis183 where salary=23000;
+select * from mphasis183 where salary>=23000;
+select * from mphasis183 where salary<=23000;
+select * from mphasis183 where salary>23000;
+select * from mphasis183 where salary<24000;
+select * from mphasis183 where salary!=23000;
+-----------------------------------------------------------
+3)between and, not between ,in,not in,like 
+=>select * from emp where sal between 2000 and 4000;
+					      
+=>select * from emp where deptno in(10,20);
+				                      
+=>
+select name from mphasis183 where salary>=21000 and name like '%p';
+select name from mphasis183 where salary>=21000 and name like 's%';
+select name from mphasis183 where salary>=21000 and name like '%a';
+select name from mphasis183 where salary>=21000 or name like '%p';
+select name from mphasis183 where salary>=21000 and name like '_a%';
+select name from mphasis183 where salary>=21000 and name like '__n%';
+
+=>select name from student where name like '_i%';
+
+=>select name from student where name like '__r%';					     
+ =>select * from emp where sal>=1500 and sal<=2500;
+					     
+ =>select * from emp where sal between 1500 and 2500;
+
+=>select empname,empcode,dob from employee1 where phoneno is null;
+
+=>select * from student where salary is null;
+-----------------------------------------------------------------
+syntax for creating table 
+-------------------------------------
+create table <table name>(<colum name> datatype,<colum name> datatype,
+<colum name> datatype);
+
+example:- create table sstudent(rollno number,name varchar2(20),phno number);
+------------------------------------------------------------------------------
+syntax for inserting data into the table 
+-------------------------------------------------------
+
+insert into <table name> values (data1,data2,data3);
+
+* characters should be in single code
+
+example:- insert into sstudent values('sunil',3,775665);
+-------------------------------------OR--------------------------------
+insert into <table name><column names> values (data1,data2,data3);
+
+* characters should be in single code
+
+example:- insert into sstudent(name,rollno,phno) values('sunil',3,775665);  //in this we can charge the order of the table.
+------------------------------------------------------------------------------------
+alter table <table name> add (<column name> <data  type>,<column name> <data  type>)
+
+example :- alter table sstudent add(phy number,chem number,bio number,total number,avg number,grade char(10));
+
+-------------------------------------------------------------
+alter table <table name> drop column (<column name> ,<column name> )
+
+example :- alter table sstudent drop column grade;
+--------------------------------------------------------------------------------------
+alter table <table name> rename column <old column name> to <new column name> 
+
+example :- alter table sstudent rename column avg to average;
+--------------------------------------------------------------------------------------------
+alter table <table name> rename to <new table name> 
+
+example:- alter table sstudent rename to studstuet;
+
+--------------------------------------------------------------------------------------
+update <table name> set <column data =?,column data =?,column data =?>  where <column data=?>
+
+example:- update sstudent set phy=27,chem=28,bio=48 where rollno=3;
+
+----------------------------------------------------------------------------------------------------
+operations
+----------------------
+1)TL (Transaction language) :- select
+
+2)DML (data manipulation language) :- insert ,update,delete
+They are temporary.if we rollback it will come to the previous state.
+
+3)DCL (data control language):- grant,revoke
+
+4)DDL (data defination language):- create,alter,drop
+
+5)TCL (Transaction control language)  :- commit,rollback ,savepoint. 
+
+--------------------------------------------------------------------------------------------------
+
+delete :- it will delete according to your requirement.(it will display all the data except the deleted data)
+
+delete <table name>;//all the records will be deleted at a time.
+
+you can use a where clause.
+
+rollback is applicable.
+-----------------------------------------------------------------
+
+truncate :- delete all the rows at a time.if u fire the select query then (NO DATA FOUND)
+
+we cannot use where clause.
+
+rollback is not applicable.
+-------------------------------------------------------------------
+select * from studstuet order by name asc;
+
+select * from studstuet order by name desc;
+-----------------------------------------------------------------------------
+constraints 
+------------------
+1)primary key :- if we declare a column as primary key you cannot enter duplicate values or you cannot keep the column value empty.(primary key = unique key + not null)
+
+2)unique key :- if we declare a column as unique we cannot enter duplicate values.
+
+3)not null :- if we declare a column as not null we cannot keep the column value empty.
+
+4)check :- we can limit a value to a column. (example salary should be greater than 15000.)
+
+5)foreign key :- you can link a table column with another table column which is having primary key.
+------------------------------------------------------------
+create table mphasis183
+(empno number primary key,
+name varchar2(30) not null,
+address varchar2(30) unique,
+salary number check (salary > 18000));
+
+insert into mphasis183 values(103,'prasanna','pune',28500);
+drop table mphasis183;
+delete mphasis183 where empno=101;
+select * from mphasis183;
+create table transaction(empno number references mphasis183,department varchar2(30),loc varchar2(30));
+select * from transaction;
+insert into transaction values(104,'sales','pune');
+
+
+----------------------------------------------------------------------------------------------
+Join is used to join 2 or more tables 
+
+inner join / equi join
+----------------------------------
+select a.empid,a.name,a.email,a.salary,b.address,b.dept from mphasisemp a,empdetails b where a.empid=b.empid;
+
+ a is the allias name for mphasisemp;
+
+b is the allias name for empdetails;
+
+--------------------------------------------------------------------------------------
+composite key :- it is used to make more than one column as primary key.
+
+create table mphasisstud 
+(empid number not null,
+name varchar2(20) not null,
+address varchar2(20),
+primary key(empid,name),
+unique (empid,address));
+
+
+insert into mphasisstud values(102,'sandip','hyd');
+select * from mphasisstud;
+-------------------------------------------------------------------
+Alternate key :- it is also called as secondary key
+
+example :- Mphasisemp table contain empid,name ,address where empid is PK and the remaining columns are known as alternate key.
+
+-----------------------------------------------------------------------
+
+Date Function
+------------------------
+it is stored as a number in the database and it can be added or subtracted from a date the numbers.
+
+select sysdate from dual;
+select * from dual;
+select months_between('28-mar-2019','28-feb-2019') from dual;
+select last_day(sysdate)from dual;
+select last_day('02-feb-2021')from dual;
+select to_char(sysdate,'DD Month yyyy HH:MI:SS AM AD') from dual;
+select to_char(sysdate,'DD Month yyyy HH:MM') from dual;
+select to_char(sysdate,'DD Mon yy HH:MM') from dual;
+select to_char(sysdate,'DD Mon yy') from dual;
+select to_char(sysdate,'Day') from dual;
+select to_char(sysdate,'Month') from dual;
+select to_char(sysdate,'year') from dual;
+select to_char(sysdate,'yyyy') from dual;
+SELECT NEXT_DAY(SYSDATE, 'SUN') FROM DUAL;
+select sysdate+1 from dual;
+select sysdate-2 from dual;
+select sysdate+2 from dual;
+-------------------------------
+sql functions 
+-------------------
+These are known as aggregate function.
+It will be applicable for a column.
+----------------------------------------------------------
+group by
+--------------------
+select count(empid),dept from mphasisemp group by dept; 
+-----------------------------------------------------------------
+select min(salary),dept from mphasisemp group by dept; 
+-------------------------------------------------------------
+having clause is used in place of where clause in group by function.
+-----------------------------------------------------------------------------------------------------
+
+select dept from mphasisemp group by dept having min(salary)>=23000; 
+
+
+------------------------------------------------------------------------------------------------------------
+group by function
+----------------------
+select * from mphasis183;
+
+alter table mphasis183 add dept varchar2(30);
+
+select * from mphasis183;
+
+insert into mphasis183(empno,name,address,salary) values(105,'sunil','bang',24000);
+
+update mphasis183 set dept='dev' where empno in(104,105);
+
+aggregate funtion
+--------------------
+SELECT COUNT(empno),dept FROM mphasis183 GROUP BY dept;
+SELECT sum(salary),dept FROM mphasis183 GROUP BY dept;
+SELECT avg(salary),dept FROM mphasis183 GROUP BY dept;
+SELECT round(avg(salary),2),dept FROM mphasis183 GROUP BY dept;
+SELECT max(salary),dept FROM mphasis183 GROUP BY dept;
+SELECT min(salary),dept FROM mphasis183 GROUP BY dept;
+
+we will use having clause in place of where clause 
+----------------------------------------------------------- 
+select dept from mphasis183 group by dept having min(salary) >= 23000;
+
+select dept from mphasis183 group by dept having max(salary) >= 23000;
+------------------------------------------------------------------------------
+-------------------------------------------------------------------
+Assignment-1
+--------------------------
+1)create table employee 
+empid(PK) ,name not null,salary,DOJ date ---   '1-jan-2021'
+insert 5 rows
+---------------------------------------------------------------------
+2)create table details
+empid(FK),Loc,dept
+insert 5 rows
+----------------------------------------------------------------------------
+3)join 2 tables and display all the records
+------------------------------------------------------------
+4)display how many employees are working in a single dept
+----------------------------------------------------------------
+5)add a column department to employee and display the highest salary of each 
+department.
+-----------------------------------------------------------------------------------
+string functions
+-----------------------
+select concat('hello ',' students') from dual;//combining 2 strings
+
+select substr('Hello students',1,5) from dual;//part of a string
+
+select length('Hello students') from dual;//no of characters of a string
+
+select instr('Hello students','s') from dual;//first occurance of s
+
+select lpad('Hello students',20,'*') from dual;//20-14=6 stars will be added to the left side of the string
+
+select rpad('Hello students',20,'*') from dual;//20-14=6 stars will be added to the right side of the string
+
+select trim('H' from 'Hello students') from dual;
+
+select trim('H' from 'Hello studentsH') from dual;//it will cut H from both sides.
+
+*Trim is use to cut space from both sides.
+
+select trim(' Hello studentsH ') from dual;//delete the header and tailer spaces.
+
+
+------------------------------------------------------------------------------------------------
+arithmatic functions
+----------------------------------
+select round(45.6645656,2)from dual;//if 3rd place is >= to 5 then 1 will be added to the 2nd place
+
+select trunc(45.66775656,2)from dual;//it will cut after 2 places of decimal
+
+select mod(15,2)from dual; //remender
+
+select abs(-2)from dual;//display the positive value only
+
+select floor(45.66)from dual;//round up to lower value
+
+select ceil(45.46)from dual;//round up to higher value
+
+select cos(0) from dual;
+
+select tan(0) from dual;
+
+--------------------------------------------------------------------------------------------
+subquery:- we will have query inside a query
+
+select all the employees who get salary more than Ankit
+-----------------------------------------------------------------
+
+select name,empid,salary from mphasisemp where salary > (select salary from mphasisemp where name='Ankit');
+
+select * from mphasisemp where salary > (select salary from mphasisemp where name='Ankit');
+
+--------------------------------------------------------------------
+creating clone table :-
+
+create table mphasisemp1 as (select * from mphasisemp);
+
+select * from mphasisemp;
+
+select * from mphasisemp1;
+--------------------------------------------------------------------------
+select * from mphasisemp1 minus select * from mphasisemp;//show the difference
+
+select * from mphasisemp1 intersect select * from mphasisemp;//show the common rows
+
+select * from mphasisemp1 union select * from mphasisemp;//all the values
+
+select * from mphasisemp1 union all select * from mphasisemp;//all the records from both the tables will be displayed
+-------------------------------------------------------------------------------------------------
+find the 2nd highest salary from mphasisemp1 table
+--------------------------------------------------------
+
+select max(salary) from mphasisemp1 where salary<(select max(salary) from mphasisemp1);
+
+find the 3rd highest salary from mphasisemp1 table
+--------------------------------------------------------
+select * from mphasisemp1 where salary=(select salary from (select distinct salary from mphasisemp1 order by salary desc)where rownum<=3
+minus
+select salary from (select distinct salary from mphasisemp1 order by salary desc)where rownum<=2);
+-----------------------------------------
+distinct:- it will display the unique values only.
+-------------
+select distinct salary from mphasisemp1 order by salary desc;
+---------------------------------
+rownum :- it is sudo column created by oracle .it displays the row count.
+--------------------------------------------------------------------------------------------------------
+view 
+----------
+A view is a logical table based on a table or another view.
+
+if we delete/insert/update a data from the view it will reflect the base table.
+
+the main purpose of view is to store bigger query.The view actually stores query and does not accupies any memory space.
+
+view can be used to make simple queries to retrive the result of complicated queries.
+
+one view can be used to retrive data from several tables (join).
+
+we can create a view on another view.
+
+if you drop the base table or base view the corrosponding view will be automatically deleted.
+
+view created on a single table is called simple view we can do DML operations.
+
+view created on a multiple tables is called complex view we cannot  do DML operations.
+
+-----------------------------------------------------------------------------------
+*
+In clone table the tables are separate if we do delete/insert/update to one table it will not reflect to the other table.
+------------------------------------------rownum---------------------------------------- 
+rownum is a pseudocolumn
+===========================
+select * from mphasisemp where rownum <2;
+select * from mphasisemp where rownum <=2;
+select * from mphasisemp where rownum = 1;
+----------------------------------------------------------------------
+no data found
+------------------------
+select * from mphasisemp where rownum > 1;
+select * from mphasisemp where rownum = 2;
+select * from mphasisemp where rownum >=1;
+--------------------------------------------------------------------------------
+alter table mphasisemp add slno number;
+
+update mphasisemp set slno=rownum;
+
+select * from mphasisemp;
+----------------------------------------------------------------------
+
+ORA-02292: integrity constraint (SYSTEM.SYS_C004801) violated - child record found
+
+select * from empdetails;//child table
+
+select * from mphasisemp;//parent table
+
+it is not allowing parent table data to delete.because the data which is present in the parent table (PK) can only be used in the child table (FK).
+you have to delete the child table data first then you can delete the parent table data.
+you cannot make the data orphane.
+----------------------------------------------------------------------------------
+Index:- It is used to retrive data from a table faster during search operation.
+
+If the data is sorted then the retrival will be faster.Other wise full table scan will happen.
+
+In case of dicinary if words are not arranged in alfabatic order we have to search the whole dicinary .
+
+we have 2 types of index.
+1)unique index:- when we define a column with primary key or unique key constraint oracle will automatically create a index on the column .Internally it will sort the data and keep so retrival will be faster.
+
+2)non unique index:- if you donot define a column as PK or unique key then we have to create a index on the table explicitly.
+
+example :- foriegn key column are not index.
+
+create index xyz1 on mphasisemp(name);
+
+if we create index on primary key column the we get error :- ORA-01408: such column list already indexed
+
+-------------------------------------------------------------------------   
+creating users :-
+connect--->conn system/1234
+
+create user---> create user ankit identified by mphasis;
+
+grant permission ---> grant dba to ankit;   (give permission)
+
+connect ---> conn ankit/mphasis
+
+select * from system.mphasisemp;
+-------------------------------------------------
+revoke
+connect--->conn system/1234
+revoke ---> revoke dba from ankit;(take away the permission)
+----------------------------------------------------
+drop user ankit;
+drop user ankit cascade;
+*if data is there you have to use cascade (forcefully) to drop the user;
+
+-------------------------------------------------------------------------------- 
+sequence :-  A sequence is a database object that is used to generate unique integers.
+
+example :- Bank accno,rollno ,slno it is auto generated .
+
+example:- create sequence seq1 increment by 1 start with 1;
+
+syntax:- create sequence <sequence name> increment by <integer> start with <integer>
+
+create sequence seq1 increment by 1 start with 1;
+
+create table mphasisstuds(empid number,name varchar2(30),address varchar2(30));
+
+insert into mphasisstuds(empid,name,address) values(seq1.nextval,'delip','Bangalore');
+
+select * from mphasisstuds; 
+1)seq1.nextval
+2)seq1.currval
+select seq1.currval from dual;
+select seq1.nextval from dual;
+
+----------------------------------------------------------------------------------------------------------------------
+
+1)which of the following is not a DDL command
+
+a)Truncate
+b)Alter
+c)create
+d)update
+
+ans)update
+----------------------------------
+2)which of the statement is used to delete all rows in a table.
+a)delete
+b)remove
+c)drop
+d)truncate
+
+a)truncate
+
+3)views are also known as --- virtual tables
+
+4)how many primary key can have in a table -----only 1
+
+5)which of the following is not a valid aggregate function
+a)count
+b)compute
+c)sum
+d)max
+
+ans)compute
+
+6)which operator is used to compare a value to a specified list of values?
+a)any
+b)between
+c)all
+d)IN
+
+ans)IN
+
+7)which operator test column for absence of data
+a)not operator
+b)exists operator
+c)is null operator
+d)none
+
+ans)is null operator
+
+8)------------- clause creates temporary relation for the query on which it is defined.
+a)with
+b)from
+c)where
+d)select
+
+ans)with
+
+ALL :- this operator return true if all of the sbuquery values meet the condition.
+------------------------------------------------------------------------------------
+select * from mphasisemp where salary < (select avg(salary)from mphasisemp);
+select * from mphasisemp where salary < all(select avg(salary)from mphasisemp);
+
+X=TRUE/FALSE
+----------------------------------------------------------
+
+select * from mphasisemp where salary > ALL(select avg(salary)from mphasisemp);
+-------------------------------------------------
+with operator
+--------------------------
+find all the employee whose salary is more than the average  salary
+of all the employees.
+----------------------------------------------------
+select * from mphasisemp;
+-----------------------------------------
+with temporaryTable(averageValue) as (select avg(salary) from 
+mphasisemp),select empid,name,salary from mphasisemp,
+temporaryTable where mphasisemp.salary > temporaryTable.averageValue;
+---------------------------------------------------------
+ANY :- this operator return true if ANY of the sbuquery values meet the condition.
+----------------------------------------------------------------------------------------
+select * from mphasisemp where salary > all(select avg(salary)from mphasisemp);
+
+select * from mphasisemp where salary > any(select avg(salary)from mphasisemp);
+
+
+-----------------------------------------------------------------------------
+SOME :- this operator return true if SOME of the sbuquery values meet the condition.
+-----------------------------------------------------------------------------------------
+select * from mphasisemp where salary > some(select avg(salary)from mphasisemp);
+---------------------------------------------------------------------------------
+EXISTS :- this operator return true if any one or more records of the subquery values meet the condition.
+
+select * from mphasisemp where EXISTS(select salary from mphasisemp where salary > 150000);
+
+
+in the table if the salary exists then whole table will be displayed otherwise no records will be displayed.
+----------------------------------------------------------
+
+which Normal from tells that 
+all columns/attributes should have single(atomic) value.
+ans)1NF
+
+which Normal from tells that 
+columns should not have partial dependency
+ans)2NF
+
+which Normal from tells that 
+columns should not have transitive dependency
+ans)3NF
+
+-------------------------------------------------------------------------
+9)Tupple value may exist but unknown or many not exists then value  is NULL.
+ans)true
+-------------------------------------------------------------------------------
+10)wat is an entiry ? object or table
+-----------------------------
+11)if entity A is associated with all the entity in B then it can be
+1:M,M:1 and M:M 
+
+ans)M:M
+
+-------------------------------------------------------------
+12)types of entity :- dependent or Independent.(true)
+
+-----------------------------------------------------
+13)sql server :-
+
+sql server supports :- database design,annalysis and report.
+------------------------------------------------------------------------
+14)components of sql server
+1)reporting
+2)design
+3)annalysis
+4)all of the above
+ans)all of the above
+---------------------------------------------------------------------
+15)Object oriented programming doesnot support M:M relationship .
+ans :(true)
+------------------------------------------------------------------
+16)select min/max date(DOB) from mphasisemp;(true)
+
+
+-------------------------
+with operator
+--------------------------
+find all the employee whose salary is more than the average  salary
+of all the employees.
+----------------------------------------------------
+select * from mphasisemp;
+-----------------------------------------
+with temporaryTable(averageValue) as (select avg(salary) from 
+mphasisemp),select empid,name,salary from mphasisemp,
+temporaryTable where mphasisemp.salary > temporaryTable.averageValue;
+---------------------------------------------------------
+ALL :- this operator return true if all of the subquery values meet the condition.
+------------------------------------------------------------------------------------
+select * from mphasisemp where salary < (select avg(salary)from mphasisemp);
+select * from mphasisemp where salary < all(select avg(salary)from mphasisemp);
+
+X=TRUE/FALSE
+----------------------------------------------------------
+
+select * from mphasisemp where salary > ALL(select avg(salary)from mphasisemp);
+-------------------------------------------------
+and :- where it satisfy both the condition.
+
+select * from customers where city="London" and country="UK";
+-------------------------------------------------------------------
+or :- where it satisfy any one of the condition.
+
+select * from customers where city="London" or salary>70000;
+-----------------------------------------------------------------------
+ANY :- this operator return true if ANY of the subquery values meet the condition.
+----------------------------------------------------------------------------------------
+select * from mphasisemp where salary > all(select avg(salary)from mphasisemp);
+
+select * from mphasisemp where salary > any(select avg(salary)from mphasisemp);
+
+
+-----------------------------------------------------------------------------
+SOME :- this operator return true if SOME of the subquery values meet the condition.
+-----------------------------------------------------------------------------------------
+select * from mphasisemp where salary > some(select avg(salary)from mphasisemp);
+
+*both any and some are same.
+-----------------------------------------------------------------------------------
+
+EXISTS :- this operator return true if any one or more records of the subquery values meet the condition.
+
+select * from mphasisemp where EXISTS(select salary from mphasisemp where salary > 150000);
+
+
+in the table if the salary exists then whole table will be displayed otherwise no records will be displayed.
+
+---------------------operators----------
+all
+and
+any
+between
+exists
+in
+like
+not
+or
+some
+----------------------------
+//return true or false
+select empid,name,salary from mphasisemp where empid=any(select empid from mphasisemp where name='Nitish');
+
+//return record
+select empid,name,salary from mphasisemp where empid=(select empid from mphasisemp where name='Nitish');
+
+---------------group by operator/aggregate operator---------------
+
+count,sum,avg,max,min it is applied on a column.
+
+
+select * from mphasisemp;
+
+alter table mphasisemp add DOB date;
+
+
+update mphasisemp set DOB='1-jan-1980' where empid in(101,102,103,104);
+
+update mphasisemp set DOB='11-jan-1980' where empid in (109,110);
+
+update mphasisemp set DOB='21-jan-1980' where empid in (105,115,125);
+
+select min(DOB) from mphasisemp;
+select max(DOB) from mphasisemp;
+
+-------------------------------------------
+SQL> insert into mphasisemp1 values(107,'hari','hari@gmail.com',34000,20);
+
+1 row created.
+
+SQL> savepoint a1;
+
+Savepoint created.
+
+
+SQL> insert into mphasisemp1 values(107,'amit','amit@gmail.com',34000,20);
+
+1 row created.
+
+SQL> savepoint a2;
+
+Savepoint created.
+
+SQL> insert into mphasisemp1 values(108,'kiran','kiran@gmail.com',34000,20);
+
+1 row created.
+
+SQL> savepoint a3;
+
+Savepoint created.
+--------------------------------------
+SQL> rollback to a2;
+------------------------------------------------------------------------
+SQL Self JOIN
+--------------------------
+A self JOIN is a regular join, but the table is joined with itself.
+------------------------------------------------------------------------
+select * from customer;
+
+create table customer (CustomerID number,CustomerName varchar2(30),ContactName varchar2(30),	
+Address	varchar2(30),City varchar2(30),PostalCode number,Country varchar2(30));
+
+insert into customer values(106,'Anusha V','Anusha','MG Road','Bangalore',080,'India');
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customer A, Customer B
+WHERE A.CustomerID <> B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+------------------------------------
+
+What is ACID property in a database?
+ACID property is used to ensure that the data transactions are processed reliably in a database system.
+
+A single logical operation of a data is called transaction.
+
+ACID is an acronym for Atomicity, Consistency, Isolation, Durability.
+
+Atomicity: it requires that each transaction is all or nothing. It means if one part of the transaction fails, the entire transaction fails and the database state is left unchanged.
+
+Consistency: the consistency property ensure that the data must meet all validation rules. In simple words you can say that your transaction never leaves your database without completing its state.
+
+Isolation: this property ensure that the concurrent property of execution should not be met. The main goal of providing isolation is concurrency control.
+
+Durability: durability simply means that once a transaction has been committed, it will remain so, come what may even power loss, crashes or errors.
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
