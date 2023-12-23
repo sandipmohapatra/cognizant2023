@@ -8,3 +8,8 @@ https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2023-12/R/eclipse
 
 
 https://www.javatpoint.com/sql-tutorial
+
+
+MySQL:
+------------------------
+ https://dev.mysql.com/downloads/installer/
