@@ -13,3 +13,8 @@ https://www.javatpoint.com/sql-tutorial
 MySQL:
 ------------------------
  https://dev.mysql.com/downloads/installer/
+
+nodeJs
+-------------
+https://nodejs.org/en/download
+
