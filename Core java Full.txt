@@ -4639,6 +4639,22 @@ public static void main(String[] args)throws Exception
 }
 }
 -----------------------------------------------------------------------------------------------------
+create table and insert data
+----------------------------------------
+import java.sql.*;
+public class Student 
+{
+public static void main(String[] args)throws Exception
+{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
+		Statement st=con.createStatement();
+		//st.execute("create table employee(empid int,name varchar(30),address varchar(30))");
+		st.execute("insert into employee value(101,'sandip','Pune')");
+		System.out.println("Successful");		
+}
+}
+----------------------------------------------------------------------------------------------------------------------------------
 update data
 -------------------
 package JDBC;
@@ -4647,8 +4663,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mphasis","root","1234");
 		Statement st=con.createStatement();
 		st.execute("update marlabsstud set address='Kolkotta' where empno=101");
 		System.out.println("Row updated");		
