@@ -1,0 +1,1827 @@
+Spring Boot is a project that is built on the top of the Spring Framework. It provides an easier and faster way to set up, configure, and run both simple and web-based applications.
+
+It is a Spring module that provides the RAD (Rapid Application Development) feature to the Spring Framework. It is used to create a stand-alone Spring-based application that you can just run because it needs minimal Spring configuration.
+
+Spring Boot is the combination of Spring Framework and Embedded Servers.
+
+In Spring Boot, there is no requirement for XML configuration (deployment descriptor). It uses convention over configuration software design paradigm that means it decreases the effort of the developer.
+
+1)We can use Spring STS IDE to develop Spring Boot Java applications.
+2)The dependency injection approach is used in Spring Boot.
+3)It contains powerful database transaction management capabilities.
+4)It simplifies integration with other Java frameworks like JPA/Hibernate ORM,  etc.
+
+5)It creates stand-alone Spring applications that can be started using Java -jar.
+6)It tests web applications easily with the help of different Embedded HTTP servers such as Tomcat, Jetty, etc. We don't need to deploy WAR files.
+7)It provides opinionated 'starter' POMs to simplify our Maven configuration.
+8)It provides production-ready features such as metrics, health checks, and externalized configuration.
+9)There is no requirement for XML configuration.
+10)It offers a CLI tool for developing and testing the Spring Boot application.
+11)It offers the number of plug-ins.
+12)It also minimizes writing multiple boilerplate codes (the code that has to be included in many places with little or no alteration), XML configuration, and annotations.
+13)It increases productivity and reduces development time.
+
+-------------------------------------------------------------------------
+Spring Boot follows a layered architecture in which each layer communicates with the layer directly below or above (hierarchical structure) it.
+
+Before understanding the Spring Boot Architecture, we must know the different layers and classes present in it. There are four layers in Spring Boot are as follows:
+
+resentation Layer: The presentation layer handles the HTTP requests, translates the JSON parameter to object, and authenticates the request and transfer it to the business layer. In short, it consists of views i.e., frontend part.
+
+Business Layer: The business layer handles all the business logic. It consists of service classes and uses services provided by data access layers. It also performs authorization and validation.
+
+Persistence Layer: The persistence layer contains all the storage logic and translates business objects from and to database rows.
+
+Database Layer: In the database layer, CRUD (create, retrieve, update, delete) operations are performed.
+------------------------------------------------------------------------------------------
+Spring Boot provides a number of starters that allow us to add jars in the classpath. Spring Boot built-in starters make development easier and rapid. Spring Boot Starters are the dependency descriptors.
+----------------------------------------------------------------------------------------------------------------------
+1)spring-boot-starter-thymeleaf:-	It is used to build MVC web applications using Thymeleaf views.
+2)spring-boot-starter-web-services:-	It is used for Spring Web Services.
+3)spring-boot-starter-mail:-It is used to support Java Mail and Spring Framework's email sending.
+4)spring-boot-starter-web:-It is used for building the web application, including RESTful applications using Spring MVC. It uses Tomcat as the default embedded container.
+5)spring-boot-starter-activemq:-It is used in JMS messaging using Apache ActiveMQ.
+6)spring-boot-starter-test:-It is used to test Spring Boot applications with libraries, including JUnit, Hamcrest, and Mockito.
+7)spring-boot-starter-jdbc:-It is used for JDBC with the Tomcat JDBC connection pool.
+8)spring-boot-starter-validation:-It is used for Java Bean Validation with Hibernate Validator.
+9)spring-boot-starter-hateoas:-It is used to build a hypermedia-based RESTful web application with Spring MVC and Spring HATEOAS.
+10)spring-boot-starter-jersey:-It is used to build RESTful web applications using JAX-RS and Jersey. An alternative to spring-boot-starter-web.
+11)spring-boot-starter-aop:-It is used for aspect-oriented programming with Spring AOP and AspectJ.
+12)spring-boot-starter-amqp:-It is used for Spring AMQP and Rabbit MQ.
+13)spring-boot-starter-data-cassandra:-It is used for Cassandra distributed database and Spring Data Cassandra.
+14)spring-boot-starter-security:-It is used for Spring Security.
+15)spring-boot-starter-data-jpa:-It is used for Spring Data JPA with Hibernate.
+16)spring-boot-starter:-It is used for core starter, including auto-configuration support, logging, and YAML.
+17)spring-boot-starter-data-mongodb:-It is used for MongoDB document-oriented database and Spring Data MongoDB.
+18)spring-boot-starter-data-rest:-It is used for exposing Spring Data repositories over REST using Spring Data REST.
+----------------------------------------------------------------------------------------------------------------------
+Spring Boot Production Starters
+---------------------------------------------------------------
+1)spring-boot-starter-actuator:-It is used for Spring Boot's Actuator that provides production-ready features to help you monitor and manage your application.
+2)spring-boot-starter-logging:-It is used for logging using Logback. Default logging starter.
+3)spring-boot-starter-tomcat:-It is used for Tomcat as the embedded servlet container. Default servlet container starter used by spring-boot-starter-web.
+4)spring-boot-starter-log4j2:-It is used for Log4j2 for logging. An alternative to spring-boot-starter-logging.
+-----------------------------------------------------------------------------------------------------------------------
+Spring Boot Starter Parent
+The spring-boot-starter-parent is a project starter. It provides default configurations for our applications. It is used internally by all dependencies. All Spring Boot projects use spring-boot-starter-parent as a parent in pom.xml file.
+
+<parent>  
+<groupId>org.springframework.boot</groupId>  
+<artifactId>spring-boot-starter-parent</artifactId>  
+<version>1.4.0.RELEASE</version>  
+</parent>  
+Parent Poms allow us to manage the following things for multiple child projects and modules:
+
+Configuration: It allows us to maintain consistency of Java Version and other related properties.
+Dependency Management: It controls the versions of dependencies to avoid conflict.
+Default Java Version
+Resource filtering
+It also controls the default plugin configuration.
+-----------------------------------------------------------------------------------------------------------------
+The spring-boot-starter-parent inherits dependency management from spring-boot-dependencies. We only need to specify the Spring Boot version number. If there is a requirement of the additional starter, we can safely omit the version number.
+--------------------------------------Example-1------------------
+file->new->spring starter project
+----------------------------------------------------------------
+<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.3</version>
+		<relativePath/> <!-- lookup parent from repository -->
+</parent>
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId><!-- spring web jars will be downloaded
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId><!-- tomcat server is embeded
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>  <!-- test related jar will be downloaded 
+			<scope>test</scope>
+		</dependency>
+-------------------------------------------------------------------------------------------------------
+*This is the main class which is autogenerated.It will search for the class containing @Component.
+In spring boot .xml files are mostly not used.
+@Component :- This annotation must be applied on top of class.It is to inform spring container to create object of the class.
+@Component must not be applied over abstract class and interface.
+@Component takes the default className as object name if we donot specify any name.
+if class name is "Employee" it will create object as "employee"
+we can specify the object name :-@Component("msg")
+so msg is the object name.
+example :- MyMessage msg=new MyMessage();
+--------------------------------------------------------
+to read object from container we use method
+getBean("objectName",ClassName.class);
+----------------------------------------------------------------------------------------------------------------------------------
+
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		ApplicationContext ac=SpringApplication.run(SpringBootExample8Application.class, args);
+		MyMessage mm=ac.getBean("msg",MyMessage.class);
+		mm.welcome();
+		System.out.println("Enter two nos");
+		Scanner ob=new Scanner(System.in);
+		int a=ob.nextInt();
+		int b=ob.nextInt();
+		System.out.println("The sum is "+mm.sum(a,b));
+	}
+
+}
+-----------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component("msg")
+public class MyMessage 
+{
+public void welcome()
+{
+	System.out.println("Welcome to SpringBoot");
+}
+public int sum(int a,int b)
+{
+	return a+b;
+}
+}
+--------------------------------------------------
+application.properties(src/main/resources)
+----------------------------------
+server.port=8090
+-----------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+create a class employee and constructor pass values(empid,name,salary) and display it
+create 3 more functions sub,mul,div
+---------------------------------------------Example-2---------------------
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample8Application.class, args);
+		
+	}
+
+}
+---------------------------------------------------------------------
+package com.example.demo;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+@ConfigurationProperties(prefix = "my.app")
+public class MyMessage implements CommandLineRunner
+{
+private Map<String,String> details;
+private Properties info;
+	public void run(String... args) throws Exception 
+	{
+			System.out.println(this);	
+	}
+	public Map<String, String> getDetails() {
+		return details;
+	}
+	public void setDetails(Map<String, String> details) {
+		this.details = details;
+	}
+	public Properties getInfo() {
+		return info;
+	}
+	public void setInfo(Properties info) {
+		this.info = info;
+	}
+	@Override
+	public String toString() {
+		return "MyMessage [details=" + details + ", info=" + info + "]";
+	}
+
+	
+	
+}
+---------------------------------------------------------------
+server.port=8090
+my.app.details.M1=sandip
+my.app.details.M2=springboot
+my.app.details.M3=example2
+
+my.app.info.C1=Shubham
+my.app.info.C2=Madhu
+my.app.info.C3=Trupti
+
+--------------------------------------------Example-3-----------------------------
+In this we are mentioning the order no 
+----------------------------------------------------------
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample8Application.class, args);
+		System.out.println("This is Trupti");
+	}
+
+}
+---------------------------------------------------------
+package com.example.demo;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+
+public class MyMessage implements CommandLineRunner,Ordered
+{
+	public void run(String... args) throws Exception 
+	{
+			System.out.println("This is shubham");	
+	}
+
+	public int getOrder() {
+		
+		return 1;
+	}
+	
+}
+---------------------------------------------
+package com.example.demo;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+
+public class MyMessage2 implements CommandLineRunner,Ordered
+{
+	public void run(String... args) throws Exception 
+	{
+			System.out.println("This is Madhu");	
+	}
+
+	public int getOrder() {
+		
+		return 2;
+	}
+	
+}
+----------------------------------------Example-4-----------------------------------------------------------
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample8Application.class, args);
+		System.out.println("Starter class called ");
+	}
+
+}
+-----------------------------------------------
+package com.example.demo;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+public class MyMessage implements CommandLineRunner
+{
+
+	public void run(String... args) throws Exception {
+		System.out.println("Starting of CommandLine Runner");
+		System.out.println(args[1]);
+		System.out.println(Arrays.asList(args));
+		System.out.println("Ending of CommandLine Runner");
+		}
+	}
+------------------------------------------------------------------
+run-->run configuration -->argument  
+--name=sandip  --db=MySql  --db=Oracle
+----------------------------------------------------------Example-5-------------------------------
+
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample8Application.class, args);
+		
+	}
+
+}
+-------------------------------------------------------------------
+server.port=8090
+
+my.info.product.id=101
+my.info.product.name=SamsungTV
+my.info.product.price=50000.00
+my.info.product.ver=1.1
+
+----------------------------------------------------------------------
+package com.example.demo;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+public class MyMessage implements CommandLineRunner
+{
+	@Value("${my.info.product.id}")
+	private int prodid;
+	@Value("${my.info.product.name}")
+	private String name;
+	@Value("${my.info.product.price}")
+	private double price;
+	@Value("${my.info.product.ver}")
+	private String ver;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "MyMessage [prodid=" + prodid + ", name=" + name + ", price=" + price + ", ver=" + ver + "]";
+	}
+
+	public void run(String... args) throws Exception {
+		System.out.println(this);
+	
+		}
+	}
+--------------------------------------------------Example-6--------------------------------------------
+
+server.port=8090
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/sandip
+spring.datasource.username=root
+spring.datasource.password=1234
+-------------------------------------------------------------------------------------
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+--------------------------------------------------------------------------------------------------------
+package com.example.demo;
+import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootExample8Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample8Application.class, args);
+		
+	}
+
+}
+---------------------------------------------------------------------------------
+package com.example.demo;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+//ctrl+shift+O
+@Component
+public class MyMessage implements CommandLineRunner
+{
+@Autowired  //HAS-A relationship
+private JdbcTemplate jt;
+@Override
+public void run(String... args) throws Exception 
+		{
+	//	String sql="insert into student values(?,?,?)";
+	//	int count=jt.update(sql,11,"Madhusudhan","Bangalore");
+	//	System.out.println("row inserted"+count);
+		
+//	String sql="update student set name=?,address=? where studid=?";
+//	int count=jt.update(sql,"Madhu","Mumbai",11);
+//	System.out.println("row updated"+count);
+	
+	String sql="delete from student where studid=?";
+	int count=jt.update(sql,11);
+	System.out.println("row deleted"+count);
+		
+	}
+-----------------------------------------------------------------------------------------
+
+create table student (studid int,name varchar(30),address varchar(30));
+-----------------------------------------------------------------------------------------
+Wap to create an employee class(empno,name,salary,designation)
+perform the insert,update,delete operations.
+-----------------------------------------------------------------------------------
+WebServices
+-----------------------
+1)SOAP
+2)REST :- Representational State Transfer.
+-----------------------------------------------------------------
+Rest is an architectural approach.It is not a protocal.
+It uses HTTP protocal.
+we build REST services with both XML and JSON.The data transfermation is done either using JSON or XML.
+We have a resource to represent the data in either XML,HTML or JSON format.
+Restful webservices are platform and language independent.
+----------------------------------
+We have some methods in HTTP which we used in Rest webservices to enter data,save data,update data or delete data.
+1)GET :-It is used to read a resource and display the data.
+2)PUT:- It is used to update an existing resource.
+3)POST:- It is used to create a new resource.
+4)DELETE:-It is used to delete the resource.
+-----------------------------------------------------------------
+example:- 
+GET/users :- It will retrive all the details of all users.
+GET/users/{id} :- It will retrive the details of the users whose id is mentioned.
+
+-------------------------
+POST/users :- It will create a user.
+--------------------------------------------------
+DELETE/users/{id} :- It will delete the details of the users whose id is mentioned.
+------------------------------------------------
+PUT/users/{id} :- It will UPDATE the details of the users whose id is mentioned.
+------------------------------------------------------------------------------------------------------------------
+404 ---RESOURCE NOT FOUND
+200---success
+500---server error
+401---Unauthorized 
+---------------------------------------------
+webservices :-mobile app bookmy show,amazon,flipcard,telephone bill payment.
+paytm :- all services are put together to make customers satisfied.
+amazon:- online shopping,utility bils payment.
+In this data tranformation will be done by using JSON,text,Html,xml 
+It can be reused.we can develop webservices using .net,java,php etc.
+We can comunicate with the services.
+
+we have service provider,service consumer,service repository.
+--------------------------------------------Example-7---------------------------------------------------
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBootExample13Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBootExample13Application.class, args);
+	}
+
+}
+-----------------------------------Controller--------------------------------------
+package com.example.demo.controller;
+
+import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.model.Book;
+import com.example.demo.service.BookService;
+@RestController
+public class BookStoreController 
+{
+@Autowired
+private BookService bookservice;
+@GetMapping("/bookstore/books")
+public List<Book> getAllBook()
+{
+	List<Book> allBookList=bookservice.getAllBook();
+	return allBookList;
+}
+
+@GetMapping("/bookstore/books/{bookid}")
+public Book getBookById(@PathVariable String bookid)
+{
+	Book bookDetails=bookservice.getBookById(Integer.parseInt(bookid));
+	return bookDetails;
+	}
+@RequestMapping(method=RequestMethod.POST, value="/bookstore/books")
+public void addBook(@RequestBody Book book)
+{
+	bookservice.addBook(book);
+}
+
+@RequestMapping(method=RequestMethod.PUT, value="/bookstore/books/{bookid}")
+public void editBook(@RequestBody Book book,@PathVariable String bookid)
+{
+	bookservice.editBook(book,Integer.parseInt(bookid));
+}
+
+@RequestMapping(method=RequestMethod.DELETE, value="/bookstore/books/{bookid}")
+public void deleteBook(@RequestBody Book book,@PathVariable String bookid)
+{
+	bookservice.deleteBook(Integer.parseInt(bookid));
+}
+
+}
+
+-----------------------------------------------------------------
+package com.example.demo.model;
+
+public class Book 
+{
+private long bookid;
+private String title;
+private double price;
+public long getBookid() {
+	return bookid;
+}
+public void setBookid(long bookid) {
+	this.bookid = bookid;
+}
+public String getTitle() {
+	return title;
+}
+public void setTitle(String title) {
+	this.title = title;
+}
+public double getPrice() {
+	return price;
+}
+public void setPrice(double price) {
+	this.price = price;
+}
+public String getAuthorname() {
+	return Authorname;
+}
+public void setAuthorname(String authorname) {
+	Authorname = authorname;
+}
+private String Authorname;
+public Book(long bookid, String title, double price, String authorname) {
+	super();
+	this.bookid = bookid;
+	this.title = title;
+	this.price = price;
+	Authorname = authorname;
+}
+@Override
+public String toString() {
+	return "Book [bookid=" + bookid + ", title=" + title + ", price=" + price + ", Authorname=" + Authorname + "]";
+}
+
+}
+-----------------------------------------------------------------------------------
+package com.example.demo.service;
+import java.util.List;
+
+import com.example.demo.model.Book;
+public interface IBookService 
+{
+public void addBook(Book book);
+public void editBook(Book book,int bookid);
+public boolean deleteBook(int bookid);
+public Book getBookById(int bookid);
+public List<Book> getAllBook();
+
+}
+--------------------------------------------------------------------
+package com.example.demo.service;
+
+import java.util.*;
+import com.example.demo.model.Book;
+import org.springframework.stereotype.Component;
+@Component
+public class BookService implements IBookService
+{
+	private static List<Book> books = new ArrayList<Book>();
+	static
+	{
+	Book book1=new Book(1,"Core Java",300.00, "Shubham");
+	Book book2=new Book(2,"Adv Java",600.00, "Trupti");
+	Book book3=new Book(3,"Spring Boot",700.00, "Madhu");
+	books.add(book1);
+	books.add(book2);
+	books.add(book3);
+		}
+	public void addBook(Book book)
+	{
+	books.add(book);	 
+		}
+
+	public void editBook(Book book, int bookid) 
+	{
+	Book record=getBookById(bookid); 
+		books.remove(record);
+		book.setBookid(bookid);
+		books.add(book);
+	}
+
+	public boolean deleteBook(int bookid) {
+	 Book record =getBookById(bookid);
+	 books.remove(record);
+		return Boolean.TRUE;
+	}
+
+	public Book getBookById(int bookid) 
+	{
+			return books.stream().filter(b ->b.getBookid() == bookid).findFirst().get();
+	}
+
+	public List<Book> getAllBook()
+	{
+		return books;
+	}
+
+}
+-------------------------------------------------------------------------------------------------------------
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+----------------------------------------------------------
+properties
+-----------------
+server.port=8090
+---------------------------------------------
+output :-
+http://localhost:8090/bookstore/books(get)
+-----------------
+[    {
+        "bookid": 1,
+        "title": "Core Java",
+        "price": 300.0,
+        "authorname": "Shubham"
+    },
+    {
+        "bookid": 2,
+        "title": "Adv Java",
+        "price": 600.0,
+        "authorname": "Trupti"
+    },
+    {
+        "bookid": 3,
+        "title": "Spring Boot",
+        "price": 700.0,
+        "authorname": "Madhu"
+    }
+]
+
+--------------------------------------------------------
+
+http://localhost:8090/bookstore/books/1(get)
+-----------------
+ {
+        "bookid": 1,
+        "title": "Core Java",
+        "price": 300.0,
+        "authorname": "Shubham"
+    }
+
+---------------------------------------------POST-------------------------------
+body--->raw--->JSON
+--------------------------------
+http://localhost:8090/bookstore/books(post) ----adding new Records
+-------------------------------------------------------------------
+{
+"bookid": 4,
+"title": "Java Advance",
+"price": 700.0,
+"authorname": "Trupti"
+}
+------------------------------PUT----------------------------------------
+http://localhost:8090/bookstore/books/5(put) ----modify the data
+
+{
+"bookid": 5,
+"title": "Java j2ee",
+"price": 650.0,
+"authorname": "Trupti Patel"
+}
+-----------------------------DELETE-------------------------------------
+http://localhost:8090/bookstore/books/5(delete) ----delete the data
+
+
+{
+"bookid": 5,
+"title": "Java j2ee",
+"price": 650.0,
+"authorname": "Trupti Patel"
+}
+
+-------------------------------------------------------------------------
+@RequestBody :- It is HttpRequest is mapped with the model data.
+
+@PathVariable :- It is used to handle variables in the request URI mapping and set them as method parameter. 
+-------------------------------------------Assignment-1-----------------------------------------------
+
+Create employee model and do the following operations
+----------------------------------------------------------------------------
+public void addEmployee(Employee emp);
+public void editEmployee(Employee emp,int empid);
+public boolean deleteEmployee(int empid);
+public Book getEmployeeById(int empid);
+public List<Employee> getAllEmployee();
+---------------------------------------------------SpringBootWebMVC----------------------------------------------------------
+step-1:-file---new--starter project
+step-2 :- select war and spring web jar files.
+step-3:- create a folder inside webapp---WEB-INF
+step-4:- create a folder inside WEB-INF---views
+step-5:-create the .jsp files inside the views
+-------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<title>EMPLOYEE REGISTRATION PAGE </title>
+<h1><center>Employee Registration Page</center></h1><hr>
+<form action=register>
+<table>
+<tr><td>Enter name<tr><input type=text name=t1 size=20></td></tr>
+<tr><td>Enter Phone no<tr><input type=text name=t2 size=20></td></tr>
+<tr><td>Enter email<tr><input type=text name=t3 size=20></td></tr>
+<tr><td>Enter address<tr><input type=text name=t4 size=20></td></tr>
+<tr><td>Enter salary<tr><input type=text name=t5 size=20></td></tr>
+<tr><td>Enter Designation<tr><input type=text name=t6 size=20></td></tr>
+<tr><td><tr><input type=submit value=submit></td></tr>
+</table>
+</form>
+</html>
+------------------------------------------
+<!DOCTYPE html>
+<title>EMPLOYEE LOGIN PAGE </title>
+<h1><center>Employee Login Page</center></h1><hr>
+<form action=login>
+<table>
+<tr><td>Enter Username<tr><input type=text name=t1 size=20></td></tr>
+<tr><td>Enter Password<tr><input type=text name=t2 size=20></td></tr>
+<tr><td><tr><input type=submit value=submit></td></tr>
+</table>
+</form>
+</html>
+-----------------------------------------------------------
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+-------------------------------------------------------------------------
+package com.example.demo;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class TestController 
+{
+	@Autowired
+	private HttpServletRequest req;
+	private HttpServletResponse res;
+	private JdbcTemplate jt;
+	
+	@GetMapping("/show")
+public String showLogin()
+{
+		return "login";
+}
+
+	@GetMapping("/show1")
+	public String showRegister()
+	{
+			return "register";
+	}
+	
+	@RequestMapping("/register")
+	public String doRegistration(HttpServletRequest req,HttpServletResponse res)
+			throws ServletException,IOException
+			{
+		res.setContentType("text/html");
+		PrintWriter pw=res.getWriter();
+		String a=req.getParameter("t1");
+		String b=req.getParameter("t2");
+		String c=req.getParameter("t3");
+		String d=req.getParameter("t4");
+		String e=req.getParameter("t5");
+		String f=req.getParameter("t6");
+		
+		String sql="insert into student values(?,?,?,?,?,?)";
+					int count=jt.update(sql,a,b,c,d,e,f);
+			pw.println("row inserted"+count);
+				return "success";
+		
+			}	
+}
+---------------------------------------------------------------------------------
+@GetMapping("/show")  ------browser (http://localhost:8090/show
+It will display the return JSP page.
+-------------------------------------------------------------
+server.port=8090
+
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+-------------------------------------------------------------------
+success.html
+----------------------
+<!DOCTYPE html>
+<title>Employee Registration Success< </title>
+<h1><center>Employee Registration Success</center></h1><hr>
+</html>
+
+------------------------------------Example-2-------------------
+package com.example.demo;
+import java.util.*;
+public class Employee
+{
+private Integer empid;
+private String empName;
+private Double empSal;
+private String empGen;
+private String empProj;
+private String empAddr;
+private List<String> empLang;
+private String empDoj;
+private List<String> empBranch;
+
+public Integer getEmpid() {
+	return empid;
+}
+public void setEmpid(Integer empid) {
+	this.empid = empid;
+}
+public String getEmpName() {
+	return empName;
+}
+public void setEmpName(String empName) {
+	this.empName = empName;
+}
+public Double getEmpSal() {
+	return empSal;
+}
+public void setEmpSal(Double empSal) {
+	this.empSal = empSal;
+}
+public String getEmpGen() {
+	return empGen;
+}
+public void setEmpGen(String empGen) {
+	this.empGen = empGen;
+}
+public String getEmpProj() {
+	return empProj;
+}
+public void setEmpProj(String empProj) {
+	this.empProj = empProj;
+}
+public String getEmpAddr() {
+	return empAddr;
+}
+public void setEmpAddr(String empAddr) {
+	this.empAddr = empAddr;
+}
+public List<String> getEmpLang() {
+	return empLang;
+}
+public void setEmpLang(List<String> empLang) {
+	this.empLang = empLang;
+}
+public String getEmpDoj() {
+	return empDoj;
+}
+public void setEmpDoj(String empDoj) {
+	this.empDoj = empDoj;
+}
+public List<String> getEmpBranch() {
+	return empBranch;
+}
+public void setEmpBranch(List<String> empBranch) {
+	this.empBranch = empBranch;
+}
+@Override
+public String toString() {
+	return "Employee [empid=" + empid + ", empName=" + empName + ", empSal=" + empSal + ", empGen=" + empGen
+			+ ", empProj=" + empProj + ", empAddr=" + empAddr + ", empLang=" + empLang + ", empDoj=" + empDoj
+			+ ", empBranch=" + empBranch + "]";
+}
+
+
+
+}
+-----------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+@RequestMapping("/employee")
+public class TestController 
+{
+@RequestMapping("/reg")
+public String showRegPage()
+{
+	return "EmpReg";
+}
+
+@RequestMapping(value="/save",method=RequestMethod.POST)
+public String readData(@ModelAttribute Employee employee,Model model)
+{
+	System.out.println(employee);
+	model.addAttribute("emp",employee);
+	return "Data";
+}
+}
+------------------------------------------------------------
+<h2>Employee Registration Page</h2>
+<form action="save" method="post">
+<table>
+<tr><td>ID:<td><input type=text name="empid"></tr>
+<tr><td>Name:<td><input type=text name="empName"></tr>
+<tr><td>Salary:<td><input type=text name="empSal"></tr>
+<tr><td>Gender<td>
+<input type=radio name=empGen value="male">Male
+<input type=radio name=empGen value="female">Female</tr>
+<tr><td>Project<td>
+<select name=empProj>
+<option value="">Select</option>
+<option value="Sonar">Sonar</option>
+<option value="Java">Java</option>
+<option value="springboot">SpringBoot</option>
+</select></tr>
+<tr><td>Address<td>
+<textarea name="empAddr"></textarea></tr>
+<tr><td>Language<td>
+<input type="checkbox" name=empLang value="English"/>English
+<input type="checkbox" name=empLang value="Hindi"/>Hindi
+<input type="checkbox" name=empLang value="Panjabi"/>Panjabi
+<input type="checkbox" name=empLang value="Urdu"/>Urdu</tr>
+
+<tr><td>Date of Join<td><input type="date" name=empDoj></tr>
+
+<tr><td>Branch<td>
+<select name=empBranch>
+<option value="">Select</option>
+<option value="Bangalore">Bangalore</option>
+<option value="Kolkota">Kolkota</option>
+<option value="Mysore">Mysore</option>
+</select></tr>
+<tr><td><td><input type=submit value=submit></tr>
+</table>
+------------Data.jsp------------------------
+<h1>The Data is </h1>
+<h2>As a toString() :${emp}</h2>
+------------------------------------------------------
+server.port=8090
+
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+-------------------------------------Example-3---------------------------------------
+controller
+------------------
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+
+	@RequestMapping("/reg")
+	public String showReg() {
+		return "Register";
+	}
+	
+	
+	@RequestMapping("/home")
+	public String showHome(Map<String,Object> model) {
+		System.out.println(model.getClass().getName());
+		model.put("sid", 101);
+		model.put("sname", "SANDIP");
+		model.put("sfee", 6500.0);
+		return "Home";
+	}
+}
+
+-----------------------------------------------------------------------------------
+application.yml
+-------------------------
+server:
+  port:
+    8090
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+--------------------Home.jsp---------------------------------------
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>WELCOME TO HOME PAGE</h1><hr>
+Data is: 
+${sid }, ${sname }, ${sfee }
+</body>
+</html>
+-------------------------Register.jsp--------------------------------
+<body>
+<h3>WELCOME TO REGISTER PAGE!!</h3>
+</body>
+-------------------------------------Example-4---------------
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class TestController 
+{
+@RequestMapping("/show")
+public String showData(@RequestParam(value="sname",required = false,defaultValue="sandip") String name, Model model)
+{
+	System.out.println("The data is "+name);
+	model.addAttribute("name",name);
+	return "Data";
+	
+}
+	
+}
+------------------------Data.jsp------------------------------------------------
+<h1>The Data is </h1>
+<h2>${name}</h2>
+-----------------------------Example-5---------------------------
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class TestController 
+{
+@RequestMapping("/show")
+public String showData(@RequestParam(name = "ID", required = false,defaultValue="101") String ID, 
+		@RequestParam (required = false,defaultValue="sandip" ,name="name")String name, Model model)
+{
+	
+	System.out.println("The data is "+name+" "+ID);
+	model.addAttribute("name",name);
+	model.addAttribute("ID",ID);
+		return "Data";
+	
+}
+	
+}
+------------------------------------------------------------------------------------------
+http://localhost:8090/show?name=madhu&ID=201
+------------------------------------------------------------------------------------------
+<h1>The Data is </h1>
+<h2>${name}</h2>
+<h2>${ID}</h2>
+----------------------------Example-6-----------------------
+package com.example.demo;
+
+public class Employee 
+{
+private Integer empid;
+private String empName;
+private Double empSal;
+public Integer getEmpid() {
+	return empid;
+}
+public void setEmpid(Integer empid) {
+	this.empid = empid;
+}
+public String getEmpName() {
+	return empName;
+}
+public void setEmpName(String empName) {
+	this.empName = empName;
+}
+public Double getEmpSal() {
+	return empSal;
+}
+public void setEmpSal(Double empSal) {
+	this.empSal = empSal;
+}
+public Employee(Integer empid, String empName, Double empSal) {
+	super();
+	this.empid = empid;
+	this.empName = empName;
+	this.empSal = empSal;
+}
+public Employee() {
+	super();
+}
+@Override
+public String toString() {
+	return "Employee [empid=" + empid + ", empName=" + empName + ", empSal=" + empSal + "]";
+}
+
+
+}
+---------------------------------Data.jsp-----------------------
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<body>
+<h2>The data are</h2>
+Data is :${emps}
+<hr>
+<table border="1">
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>SALARY</th>
+</tr>
+<c:forEach items="${emps}" var="ob">
+<tr>
+<td>${ob.empid }</td>
+<td>${ob.empName }</td>
+<td>${ob.empSal }</td>
+</tr>
+</c:forEach>
+</table>
+</body>
+</html>
+-------------------------------------------------------------------
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+</dependency>
+-----------------------------------------------------
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class TestController 
+{
+@RequestMapping("/show")
+public String showData(Model model)
+{
+	List<Employee> list=List.of(
+			new Employee(101,"sandip",45000.00),
+			new Employee(102,"sunil",45000.00),
+			new Employee(103,"sumit",45000.00),
+			new Employee(104,"shubham",45000.00)
+						);
+	model.addAttribute("emps",list);
+	return "Data";
+}
+	
+}
+--------------------------------------------------------------------
+
+List.of ();
+-----------------------------------------Assignment-1--------------------------------
+
+Create a Book model (bookid,book name,author name,price)
+Store it into the database and display the report using JSTL.
+------------------------------------------------------------------------------------------
+Spring Boot Data JPA:-
+--------------------------------------------
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>19.10.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+---------------------------------------------------------------------------------------
+In this code is generated by Data jpa only.No database operation code is written by programmer.
+
+We have define one interface only.we have predefined Repository interface.
+1)CrudRepository,PagingAndSortingRepository,JpaRepoditory.
+i)we have to create a model class.
+ii)Repository interface.
+iii)Runner class:-Here we have to test the repository interface by calling save(),update(),delete()...etc.
+
+-----Example-1-----To save the Data-------------------------
+model
+--------------
+package com.example.demo;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="marlabemployee22")
+public class Employee {
+	public Employee(String empName, Double empSal) {
+		super();
+		this.empName = empName;
+		this.empSal = empSal;
+	}
+	@Id
+	@Column(name="eid")
+	@GeneratedValue
+	private Integer empid;
+	@Column(name="ename")
+	private String empName;
+	@Column(name="esal")
+	private Double empSal;
+	
+	public Integer getEmpid() {
+		return empid;
+	}
+	public void setEmpid(Integer empid) {
+		this.empid = empid;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public Double getEmpSal() {
+		return empSal;
+	}
+	public void setEmpSal(Double empSal) {
+		this.empSal = empSal;
+	}
+	public Employee(Integer empid, String empName, Double empSal) {
+		super();
+		this.empid = empid;
+		this.empName = empName;
+		this.empSal = empSal;
+	}
+	
+
+}
+--------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmployeeTest implements CommandLineRunner
+{
+@Autowired
+private EmployeeRepository repo;
+
+	@Override
+	public void run(String... args) throws Exception
+	{
+	repo.save(new Employee("sandip",3000.30));
+	repo.save(new Employee("madhu",3000.30));
+	repo.save(new Employee("shubham",3000.30));
+	repo.save(new Employee("trupti",3000.30));
+	System.out.println(repo.count());
+	}
+
+
+}
+---------------------------------------------------------
+server.port=8090
+
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=system
+spring.datasource.password=1234
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.database-platform=org.hibernate.dialect.Oracle9Dialect
+--------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeRepository extends JpaRepository<Employee, Integer>
+{
+
+}
+-------------------------------------------------------------------------------
+example-2
+-----------------
+package com.example.demo;
+
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmployeeTest implements CommandLineRunner
+{
+@Autowired
+private EmployeeRepository repo;
+
+	@Override
+	public void run(String... args) throws Exception
+	{
+	repo.save(new Employee("sandip k",3000.30));
+	repo.save(new Employee("madhu r",3000.30));
+	repo.save(new Employee("shubham m",3000.30));
+	repo.save(new Employee("trupti p",3000.30));
+	System.out.println(repo.count());
+	repo.saveAll(Arrays.asList(
+			new Employee("Kiran",35000.89),
+			new Employee("Niraj",35000.89),
+			new Employee("sunil",35000.89),
+			new Employee("anil",35000.89)
+					));
+	System.out.println(repo.count());
+	}
+
+
+}
+---------------------To update the data we also use save() or saveAll()-------------------------------------------------------------
+Example-3
+------------------------
+boolean exist=repo.existsById(8);
+	System.out.println(exist);
+	
+	repo.deleteById(8);
+	repo.deleteAll();
+* we have to create default constructor for update
+----------------------------------------------------------------------------
+package com.example.demo;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmployeeTest implements CommandLineRunner
+{
+@Autowired
+private EmployeeRepository repo;
+
+	@Override
+	public void run(String... args) throws Exception
+	{
+	repo.save(new Employee("sandip k",3000.30));
+	repo.save(new Employee("madhu r",3000.30));
+	repo.save(new Employee("shubham m",3000.30));
+	repo.save(new Employee("trupti",3000.30));
+	repo.save(new Employee(4,"trupti p",37800.30));//update
+
+	repo.saveAll(Arrays.asList(
+			new Employee("Kiran",35000.89),
+			new Employee("Niraj",35000.89),
+			new Employee("sunil",35000.89),
+			new Employee("anil",35000.89),
+			new Employee("anil",45000.89) 
+					));
+	boolean exist=repo.existsById(8);
+	System.out.println(exist);
+	
+	//repo.deleteById(8);
+//	repo.deleteAll();
+	Optional<Employee> opt=repo.findById(6);
+	if(opt.isPresent())
+	{
+		Employee s=opt.get();
+		System.out.println(s);
+	}
+	repo.findAll().forEach(System.out::println);
+	repo.findAllById(Arrays.asList(5,6,7,8)).forEach(System.out::println);
+	}
+	}
+
+---------------------------------------------------------------------------------------------------------------
+example-2
+-------------------
+package com.example.demo;
+
+import java.util.Scanner;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootProject1Application {
+
+	public static void main(String[] args) {
+		ApplicationContext ac=SpringApplication.run(SpringBootProject1Application.class, args);
+		MyMessage mm=ac.getBean("ob1",MyMessage.class);
+		mm.welcome();
+		Scanner ob=new Scanner(System.in);
+		System.out.println("enter two numbers");
+		int a=ob.nextInt();
+		int b=ob.nextInt();
+		System.out.println("The sum of two nos are "+mm.sum(a, b));
+		Employee em=ac.getBean("emp",Employee.class);
+		em.input();
+		em.display();
+		Calculator cl=ac.getBean("cal",Calculator.class);
+		System.out.println("the square of a no is "+cl.square(3));
+		System.out.println("the multiply of 2 nos is "+cl.mul(5, 6));
+	}
+
+}
+----------------------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.stereotype.Component;
+
+@Component("ob1")
+public class MyMessage 
+{
+public void welcome()
+{
+	System.out.println("welcome to spring boot");
+}
+public int sum(int a,int b)
+{
+	return a+b;
+}
+}
+----------------------------------------------------------------------------------------
+package com.example.demo;
+
+import java.util.Scanner;
+
+import org.springframework.stereotype.Component;
+
+@Component("emp")
+public class Employee
+{
+int empno;
+String name,address;
+double salary;
+void input()
+{
+	Scanner ob=new Scanner(System.in);
+	System.out.println("enter empno,name,address and salary");
+	empno=ob.nextInt();
+	name=ob.next();
+	address=ob.next();
+	salary=ob.nextDouble();
+}
+void display()
+{
+	System.out.println("The empno is "+empno);
+	System.out.println("The empname is "+name);
+	System.out.println("The empaddress is "+address);
+	System.out.println("The empsalary is "+salary);
+	}
+}
+----------------------------------------------------------------------------------
+package com.example.demo;
+import org.springframework.stereotype.Component;
+
+@Component("cal")
+public class Calculator 
+{
+public int square(int a)
+{
+	return a*a;
+}
+public int mul(int a,int b)
+{
+	return a*b;
+}
+}
+----------------------------------------------------------------------------------------------------
+example-2
+-------------------
+package com.example.demo;
+
+import java.util.Scanner;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBootProject1Application {
+
+	public static void main(String[] args) {
+		ApplicationContext ac=SpringApplication.run(SpringBootProject1Application.class, args);
+		
+	}
+
+}
+-----------------------------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+@Component("ob1")
+public class MyMessage implements CommandLineRunner,Ordered
+{
+@Override
+public int getOrder() {
+	
+	return 3;
+}
+@Override
+public void run(String... args) throws Exception 
+{
+	System.out.println("This is third message");
+}
+}
+---------------------------------------------------------------------------
+package com.example.demo;
+
+import java.util.Scanner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
+@Component("emp")
+public class Employee implements CommandLineRunner,Ordered
+{
+
+@Override
+public int getOrder() {
+	
+	return 1;
+}
+
+@Override
+public void run(String... args) throws Exception {
+	System.out.println("this is First message");
+	}
+}
+--------------------------------------------------------------------------------------
+package com.example.demo;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+
+@Component("cal")
+public class Calculator implements CommandLineRunner,Ordered
+{
+
+@Override
+public int getOrder() {
+
+	return 2;
+}
+
+@Override
+public void run(String... args) throws Exception {
+	System.out.println("this is second display");
+	
+}
+}
+---------------------------------------------------------------------------------------------------------
+https://forms.office.com/r/jb73hwrK1k
+--------------------------------------------------------
+example-3
+-------------------
+package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBootProject2Application {
+
+	public static void main(String[] args) 
+	{
+		SpringApplication.run(SpringBootProject2Application.class, args);
+	}
+
+}
+------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+//create table hdfcemploy(empno int ,name varchar(30),
+//address varchar(30));
+@Component
+public class InsertDemo implements CommandLineRunner,Ordered
+{
+@Autowired  //has-a relationship
+private JdbcTemplate jt;
+	@Override
+	public int getOrder() {return 1;}
+
+	@Override
+	public void run(String... args) throws Exception {
+		String x="insert into hdfcemploy values(?,?,?)";
+		int count=jt.update(x,101,"sandip","Bangalore");
+		System.out.println("row inserted "+count);
+	}}
+-------------------------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+@Component
+public class UpdateDemo implements CommandLineRunner,Ordered
+{
+@Autowired  //has-a relationship
+private JdbcTemplate jt;
+	@Override
+	public int getOrder() {return 2;}
+
+	@Override
+	public void run(String... args) throws Exception {
+		String x="update hdfcemploy set name=?,address=? where empno=?";
+		int count=jt.update(x,"sandip kumar","Pune",101);
+		System.out.println("row updated "+count);
+	}}
+
+------------------------------------------------------------------------------------------------------------
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+@Component
+public class DeleteDemo implements CommandLineRunner,Ordered
+{
+@Autowired  //has-a relationship
+private JdbcTemplate jt;
+	@Override
+	public int getOrder() {return 3;}
+
+	@Override
+	public void run(String... args) throws Exception {
+		String x="delete from hdfcemploy where empno=?";
+		int count=jt.update(x,101);
+		System.out.println("row deleted "+count);
+	}}
+
+------------------------------------------------------------------------------------------------------
+server.port=8090
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/hdfc
+spring.datasource.username=root
+spring.datasource.password=1234
+----------------------------------------------------------------------------------------------
+package com.example.demo;
+
+import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
+//create table hdfcemploy(empno int ,name varchar(30),
+//address varchar(30));
+@Component
+public class InsertDemo implements CommandLineRunner,Ordered
+{
+@Autowired  //has-a relationship
+private JdbcTemplate jt;
+	@Override
+	public int getOrder() {return 1;}
+
+	@Override
+	public void run(String... args) throws Exception 
+	{
+		Scanner ob=new Scanner(System.in);
+		System.out.println("enter empno,name,address");
+		int empno=ob.nextInt();
+		String name=ob.next();
+		String address=ob.next();
+		String x="insert into hdfcemploy values(?,?,?)";
+		int count=jt.update(x,empno,name,address);
+		System.out.println("row inserted "+count);
+	}}
+-------------------------------------------------------------------------------------------------
+create an application for a shopping site
+where you can insert new products
+update the product details like price etc.
+delete the product when it is out dated.
+--------------------------------------------------------------------------------------------- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
