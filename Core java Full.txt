@@ -4649,8 +4649,8 @@ public static void main(String[] args)throws Exception
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Statement st=con.createStatement();
-		//st.execute("create table employee(empid int,name varchar(30),address varchar(30))");
-		st.execute("insert into employee value(101,'sandip','Pune')");
+		//st.execute("create table employee23(empid int,name varchar(30),address varchar(30))");
+		st.execute("insert into employee23 value(101,'sandip','Pune')");
 		System.out.println("Successful");		
 }
 }
@@ -4664,9 +4664,9 @@ public class Student
 public static void main(String[] args)throws Exception
 {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mphasis","root","1234");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Statement st=con.createStatement();
-		st.execute("update marlabsstud set address='Kolkotta' where empno=101");
+		st.execute("update employee2023 set address='Kolkotta' where empno=101");
 		System.out.println("Row updated");		
 }
 }
@@ -4679,8 +4679,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Statement st=con.createStatement();
 		st.execute("delete marlabsstud where empno=101");
 		System.out.println("Row deleted");		
@@ -4699,8 +4699,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Statement st=con.createStatement();
 		ResultSet rs=st.executeQuery("select * from marlabsstud");
 		while(rs.next())
@@ -4733,8 +4733,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Scanner ob=new Scanner(System.in);
 		System.out.println("enter empno,name,address");
 		int empno=ob.nextInt();
@@ -4802,8 +4802,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Scanner ob=new Scanner(System.in);
 		System.out.println("enter name,address and empno which you want to update");
 		String name=ob.next();
@@ -4827,8 +4827,8 @@ public class Student
 {
 public static void main(String[] args)throws Exception
 {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 		Scanner ob=new Scanner(System.in);
 		System.out.println("enter empno which you want to delete");
 		int empno=ob.nextInt();
@@ -4853,8 +4853,8 @@ public static void main(String[] args)throws Exception
 	String name=ob.next();
 	String address=ob.next();
 	String DOJ=ob.next();
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","1234");
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/cognizant","root","1234");
 	/*	PreparedStatement st=con.prepareStatement("create table marlabemp(empno number,name varchar2(30),address varchar2(30),DOJ date)");
 		st.execute();
 		System.out.println("table created");*/
