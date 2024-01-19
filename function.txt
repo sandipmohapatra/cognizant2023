@@ -1,0 +1,129 @@
+Function :-
+A function is a pl/sql block which return a single value.
+-----------
+example:-
+create or replace function adds (i number,j number) return number is
+
+begin
+return i+j;
+end;
+--------------------------------------------
+select adds(4,5) from dual; //function call
+---------------------------------------------
+declare
+k number;
+begin
+k:=adds(10,20);
+dbms_output.put_line('result:'||k);
+end;
+------------------------------------------------------------------------------------
+create or replace function emp_designat(salary number) return varchar is
+begin
+if(salary<=5000) then
+return 'clerk';
+elsif(salary<=7000) then
+return 'supervisor';
+elsif(salary<=10000) then
+return 'officer';
+elsif(salary<=15000) then
+return 'manager';
+else
+return 'president';
+end if;
+end;
+------------------------------------------
+select emp_designat(24800) from dual; 
+----------------------------------------------------
+
+1)wap to enter a radius and find the area of the circle using function.
+2)wap to enter a amount and find the simple interest .using function.
+simple interest=(p*t*r)/100;
+------------------------------------------------------------------------------- 
+create or replace function areacircle (i number) return number is
+pi constant number:=3.14;
+begin
+return pi*power(i,2);
+end;
+
+select areacircle(5) from dual;
+-----------------------------------------------------
+create or replace function areacircle (i float) return float is
+pi constant float:=3.14;
+begin
+return pi*power(i,2);
+end;
+-------------------------------------------------------
+declare
+k number;
+i number;
+begin
+i:=:i;
+k:=areacircle(i);
+dbms_output.put_line('result:'||k);
+end;
+
+------------------------------------------------------------------------------------
+create or replace function simpleint (p number,r number,t number) return number is
+begin
+return (p*t*r)/100;
+end;
+
+select simpleint(1000,10,4) from dual;
+----------------------------------------------------------------------------------------
+declare
+k number;
+p number;
+t number;
+r number;
+begin
+t:=:t;
+p:=:p;
+r:=:r;
+k:=simpleint(p,t,r);
+dbms_output.put_line('result:'||k);
+end;
+------------------------------------------------------------------------------------
+w.ap to enter a number and find if it is even or odd using function.
+------------------------------------------------------------------------------------
+create or replace function evenodd (i number) return varchar is
+begin
+if(i mod 2=0)then
+return 'even';
+else
+return 'odd';
+end if;
+end;
+
+select evenodd(5) from dual;
+---------------
+declare
+k char(30);
+i number;
+begin
+i:=:i;
+k:=evenodd(i);
+dbms_output.put_line('result:'||k);
+end;
+-----------------------
+create or replace function calfun(nempno emp223.empono%type)
+return number as
+nsalary emp223.salary%type;
+ntotal emp223.salary%type;
+begin
+select salary,salary*12 into nsalary, ntotal from emp223 where empono=nempno;
+return ntotal;
+end;
+
+--------------------------------------------------
+declare 
+nresult number;
+begin
+nresult:=calfun(145);
+dbms_output.put_line('the nresult is '||nresult);
+end;
+----------------------------------------------
+
+select * from emp223;
+
+------------------------------------
+select calfun(145) from dual;
