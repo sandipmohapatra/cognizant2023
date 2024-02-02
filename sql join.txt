@@ -83,5 +83,25 @@ FROM Customer A, Customer B
 WHERE A.CustomerID <> B.CustomerID
 AND A.City = B.City
 ORDER BY A.City;
+---------------------------------------------------------------------------------
+2nd-Feb-2024
+--------------------------
+create table bank(accno number primary key,name varchar(30) not null, address varchar(30) unique, balance number);
 
+insert into bank values(102,'sunil','Hydrabad',15000);
+select * from bank;
+select a.accno,a.name,a.address,a.balance,b.dateoftrans from bank left join trans on bank a, trans b where a.accno=b.accno;
+
+create table trans(accno number references bank,customername varchar(30),dateoftrans date);
+insert into trans values(102,'sunil','02-feb-2024');
+----------------------------------------------------------------------
+Left outer join
+-------------------------------------------
+select a.accno,a.name,a.address,a.balance,b.dateoftrans from bank left join trans on bank a, trans b where a.accno=b.accno(+);
+
+select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank left outer join trans on bank.accno=trans.accno order by bank.address desc;
+
+select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank left outer join trans on bank.accno=trans.accno order by bank.address asc;
+
+----------------------------------------------------------------------------------------------
 
