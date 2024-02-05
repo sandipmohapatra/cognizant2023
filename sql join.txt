@@ -99,7 +99,7 @@ inner or eque-join
 select a.accno,a.name,a.address,a.balance,b.dateoftrans from  bank a, trans b where a.accno=b.accno;
 ----------------------------------------------------------------------
 Left outer join
--------------------------------------------
+-------------------------------------------------
 select a.accno,a.name,a.address,a.balance,b.dateoftrans from bank left join trans on bank a, trans b where a.accno=b.accno(+);
 -------------------------------------------------
 
@@ -107,3 +107,6 @@ select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from ban
 
 select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank left outer join trans on bank.accno=trans.accno order by bank.address asc;
 
+select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank right outer join trans on bank.accno=trans.accno order by bank.address asc;
+
+select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank full outer join trans on bank.accno=trans.accno order by bank.address asc;
