@@ -106,7 +106,81 @@ select a.accno,a.name,a.address,a.balance,b.dateoftrans from bank left join tran
 select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank left outer join trans on bank.accno=trans.accno order by bank.address desc;
 
 select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank left outer join trans on bank.accno=trans.accno order by bank.address asc;
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank right outer join trans on bank.accno=trans.accno order by bank.address asc;
-
+----------------------------------------------------------------------------------------------------------------
 select bank.accno,bank.name,bank.address,bank.balance,trans.dateoftrans from bank full outer join trans on bank.accno=trans.accno order by bank.address asc;
+----------------------------------------------------------------------------------------
+product
+customer
+--------------------------
+create table product(pid number primary key, pname varchar2(30) unique, pcost number(9,2) not null, available varchar2(30));  
+
+insert into product values(104,'oil',240,'yes');
+select * from product;
+
+create table customer(cid number, cname varchar2(30) not null, loc varchar2(30),pid number references product);
+
+insert into customer values(1003,'amit','hydrabad',103);
+select * from customer;
+
+select cid,count(cid) from customer group by cid having count(cid) >= 2;
+
+select cid,count(cid) from customer group by cid;
+
+select loc,count(loc) from customer group by loc order by loc asc;
+
+select loc,count(loc) from customer group by loc order by loc desc;
+
+equi-join
+-------------------
+select product.pid, product.pname, product.pcost, product.available,
+customer.cid, customer.cname, customer.loc from product , customer where 
+product.pid=customer.pid ;
+
+outer-join
+-----------------
+select product.pid, product.pname, product.pcost, product.available,
+customer.cid, customer.cname, customer.loc from product , customer where 
+product.pid=customer.pid(+);
+
+select product.pid, product.pname, product.pcost, product.available,
+customer.cid, customer.cname, customer.loc from product left outer join customer on 
+product.pid=customer.pid;
+
+
+select product.pid, product.pname, product.pcost, product.available,
+customer.cid, customer.cname, customer.loc from product right outer join customer on 
+product.pid=customer.pid;
+
+
+select product.pid, product.pname, product.pcost, product.available,
+customer.cid, customer.cname, customer.loc from product full outer join customer on 
+product.pid=customer.pid;
+
+---------------------------------------------------------------
+Question-1(join tables)
+------------------------------------------------
+Write a query to display order id, customer name, hotel name, and order amount of all orders. Sort the result based on order id in ascending order.
+
+ Use 1)Customers,2) Hotel_details 3) Orders tables to retrieve records.
+
+select orders.order_id, customers.customer_name, hotel_details.hotel_name, orders.order_amount
+from orders, customers, hotel_details
+where orders.customer_id = customers.customer_id
+    and orders.hotel_id = hotel_details.hotel_id
+order by orders.order_id;
+
+------------------------------------------------------------------------------------------------------------
+Question-2 (group by)
+-----------------------------------------------
+Write a query to display the user id and number of time tickets was booked by each user. Give an alias name as no_of_times. Sort the result based on the user_id.
+
+select user_id, count(bd_id) as `no_of_times`
+from bookingdetails
+group by user_id asc;
+-------------------------------------------------------------------------------------------
+Write a query to display car id and number of times car taken for rental. Give an alias name to the number of times car taken for rental as 'NO_OF_TRIPS'. Sort the records based on car id in ascending order.
+
+select car_id, count(car_id) as NO_OF_TRIPS from rentals group by car_id order by car_id;
+--------------------------------------------------------------------------------------------------------------------
